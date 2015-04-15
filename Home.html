@@ -9,26 +9,81 @@
 <BODY>
 
 <div id="okvir">
-    <div id="meni">
-		<ul>
-			<li><a href="Home.html">Početna</a></li>
-			<li><a href="Historijat.html">Historijat</a></li>
-			<li><a href="MS.html">Meša Selimović</a></li>
-			<li><a href="Odsijeci.html">Odsijeci</a></li>
-			<li><a href="Kontakt.html">Kontakt</a></li>
-        </ul>
-    </div>
+		<div id="meni">
+			<ul>
+				<li><a href="Home.html">Početna</a></li>
+				<li><a href="Historijat.html">Historijat</a></li>
+				<li><a href="MS.html">Meša Selimović</a></li>
+				<li><a href="Odsjeci.html">Odsjeci</a></li>
+				<li><a href="Kontakt.html">Kontakt</a></li>
+			</ul>
+		</div>
+
 		<div id="zaglavlje">
 			<h1>Gimnazija Meša Selimović</h1>
 		</div>
+
 		<div id="lighter">
 			<form action="demo_form.asp">
 				<span><input type="text" class="search rounded"></span>
 			</form>
 		</div>
+		
 		<div id="lijevo">
-			<h2>Galerije</h2>
 			
+		<h2>Galerije</h2>
+		
+		<ul id = "drop">
+			<li id = "godisnjice">
+				<a onclick = "kliknuto(this);">Godišnjice</a>
+					<ul>
+						<li><a href="#">2014/2015</a></li>
+						<li><a href="#">2013/2014</a></li>
+						<li><a href="#">2012/2013</a></li>
+						<li><a href="#">2011/2012</a></li>
+					</ul>
+			</li>
+			<li id = "mature">
+				<a  onclick = "kliknuto(this);">Mature</a>
+					<ul>
+						<li><a href="#">2014/2015</a></li>
+						<li><a href="#">2013/2014</a></li>
+						<li><a href="#">2012/2013</a></li>
+						<li><a href="#">2011/2012</a></li>
+					</ul>
+			</li>
+			<li id = "ostalo">
+				<a  onclick = "kliknuto(this);">Ostalo</a>
+					<ul>
+						<li><a href="#">2014/2015</a></li>
+						<li><a href="#">2013/2014</a></li>
+						<li><a href="#">2012/2013</a></li>
+						<li><a href="#">2011/2012</a></li>
+					</ul>
+			</li>
+			<li id = "sekcije">
+				<a onclick = "kliknuto(this);">Sekcije</a>
+					<ul>
+						<li><a href="#">2014/2015</a></li>
+						<li><a href="#">2013/2014</a></li>
+						<li><a href="#">2012/2013</a></li>
+						<li><a href="#">2011/2012</a></li>
+					</ul>
+			</li>
+			<li id = "takmicenja">
+				<a onclick = "kliknuto(this);">Takmičenja</a>
+				<ul>
+			
+						<li><a href="#">2014/2015</a></li>
+						<li><a href="#">2013/2014</a></li>
+						<li><a href="#">2012/2013</a></li>
+						<li><a href="#">2011/2012</a></li>
+				
+				</ul>
+			</li>
+		</ul>
+		
+  		<script src = "pop_in.js"></script>
 		</div>
 		
 		<div id="glavni">

@@ -1,6 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=PT+Sans);
 @import url(http://fonts.googleapis.com/css?family=Stalemate);
 
+
 #okvir {
 width : 900px;
 height : auto;
@@ -31,19 +32,53 @@ color : #01A0D7;
 font-size : 22pt;
 font-family : Stalemate;
 }
+
 #lijevo {
 background-color : #267794;
 height : auto;
 width : 200px;
 float : left;
+text-align : left;
+}
+
+#email_error{
+background: url("warning.png") 0% no-repeat;
+}
+
+#name_error{
+
+	background: url("warning.png") 0% no-repeat;
+}
+
+#text_error{
+
+	background: url("warning.png") 0% no-repeat;
+}
+
+.webcheck.da{
+	color: red;
+}
+
+
+#lijevo  h2{
 text-align : center;
 }
+
 #lijevo ul {
 list-style : none;
 }
 #lijevo ul li {
-display : inline;
+display : table;
 }
+#lijevo a{
+color: white;
+}
+#lijevo a:hover{
+color: #01A0D7;
+}
+
+
+
 #glavni {
 height : auto;
 width : 484px;

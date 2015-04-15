@@ -7,7 +7,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 </HEAD>
-<BODY onload="LoadGmaps()" onunload="GUnload()">
+<BODY>
 
 <div id="okvir">
     <div id="meni">
@@ -15,7 +15,7 @@
 			<li><a href="Home.html">Početna</a></li>
 			<li><a href="Historijat.html">Historijat</a></li>
 			<li><a href="MS.html">Meša Selimović</a></li>
-			<li><a href="Odsijeci.html">Odsijeci</a></li>
+			<li><a href="Odsjeci.html">Odsijeci</a></li>
 			<li><a href="Kontakt.html">Kontakt</a></li>
         </ul>
 		
@@ -30,31 +30,41 @@
 		</div>
 		
 	
-	<form class="form">
+	<form name = "InputForm" class="form" onsubmit= "return myFunction()">
 		
 		<p class="name">
 			<input type="text" name="name" id="name" placeholder="Ime prezime" />
-			<label for="name">Ime</label>
+			<label for="name">Ime i prezime</label>
+			<p id = "name_error"><p>
 		</p>
 		
+
 		<p class="email">
 			<input type="text" name="email" id="email" placeholder="mail@example.com" />
 			<label for="email">Email</label>
+			<p id = "email_error"><p>
 		</p>
 		
+		<p class="webcheck">
+			<label for="webcheck">Da li zelite ostaviti svoju web adresu: </label><br>
+			<input type="radio" id="webradioDA" name = "webradio" value="DA" onchange = "Enable();">DA
+			<input type="radio" id="webradioNE" name = "webradio"  value="NE" onchange = "Enable();"  checked>NE		
+		</p>
+
 		<p class="web">
-			<input type="text" name="web" id="web" placeholder="www.example.com" />
-			<label for="web">Website</label>
+			<input type="text" name="web" id="web" placeholder="www.example.com" disabled/>
 		</p>		
 	
 		<p class="text">
-			<textarea name="text" placeholder="Napiši nešto" ></textarea>
+			<textarea id="input" name="text" placeholder="Napiši nešto" ></textarea>
+			<p id = "text_error"><p>
 		</p>
 		
 		<p class="submit">
-			<input type="submit" value="Pošalji" />
+			<input type="submit" value="Pošalji"/>
 		</p>
 	</form>
+	<SCRIPT src="validating.js"></SCRIPT>
 		
 		<div id="podnozje"><p>Copyright &copy; Elmir Hodžić 2014/2015.</p></div>
 </div>
