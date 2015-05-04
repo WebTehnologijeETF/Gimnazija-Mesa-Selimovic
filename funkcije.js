@@ -158,8 +158,8 @@ function dodajKnjigu(){
     xmlhttp.onreadystatechange = function(event) {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
 		{
-				ucitajKnjige();
-				document.getElementById("unos_knjige").style.display = "none";
+			ucitajKnjige();
+			document.getElementById("opcije_za_knjige").innerHTML = "";
 		}	
 
     }
@@ -186,7 +186,7 @@ function brisiKnjigu(){
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
 		{			
 			ucitajKnjige();
-			document.getElementById("brisanje_knjige").style.display = "none";
+			document.getElementById("opcije_za_knjige").innerHTML = "";
 		}	
     }
 	
@@ -224,7 +224,7 @@ function azurirajKnjigu()
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
 		{
 			ucitajKnjige();
-			document.getElementById("azuriranje_knjige").style.display = "none";
+			document.getElementById("opcije_za_knjige").innerHTML = "";
 		}
 
     }
@@ -240,7 +240,16 @@ function ValidirajUnosKnjige()
 	return false;
 }
 
-function prikaziFormu(id_taga)
+function prikaziFormu(path)
 {
-	document.getElementById(id_taga).style.display = "block";
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function()
+	{
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+		{
+			document.getElementById("opcije_za_knjige").innerHTML = xmlhttp.responseText;
+		}	
+	}
+	xmlhttp.open("GET", path + ".html", true);
+	xmlhttp.send();
 }

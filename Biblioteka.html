@@ -10,67 +10,11 @@
 
 <div id = "opcije">
 <br><br>
-	<input type="button" value="Dodaj knjigu" onclick = "prikaziFormu('unos_knjige')"/>
-	<input type="button" value="Obrisi knjigu" onclick = "prikaziFormu('brisanje_knjige')"/>
-	<input type="button" value="Azuriraj knjigu" onclick = "prikaziFormu('azuriranje_knjige')"/>
+	<input type="button" value="Dodaj knjigu" onclick = "prikaziFormu('unesi')"/>
+	<input type="button" value="Obrisi knjigu" onclick = "prikaziFormu('obrisi')"/>
+	<input type="button" value="Azuriraj knjigu" onclick = "prikaziFormu('azuriraj')"/>
 </div>
 
-<div id="brisanje_knjige">
-	
-	<form name = "DodajKnjigu" class="form" onsubmit= "return ValidirajUnosKnjige()" >			
-		ID knjige:<br> 
-		<input type="text" name="naziv" class="rounded"  id="id_knjige"/><br><br>
-		
-		<p class = "prihvati">
-			<input type="submit" value="Prihvati" onclick = "brisiKnjigu()"/>
-		</p>			
-	</form>
-	
-<div>
-
-<div id="unos_knjige">
-	
-	<form name = "DodajKnjigu" class="form" onsubmit= "return ValidirajUnosKnjige()" >			
-		Naziv:<br> 
-		<input type="text" name="naziv" class="rounded"  id="naziv_knjige"/><br><br>
-
-		Opis:<br>
-		<input type="text" name="opis" class="rounded" id="opis_knjige"/><br><br>
-
-		Kolicina:<br> 
-		<input type="text" name="kolicina" class="rounded" id="kolicina_knjiga"/><br><br>
-
-		Link slike:<br>
-		<input type="text" name="link" class="rounded" id="link_slike"/><br><br>
-
-		<p class = "prihvati">
-			<input type="submit" value="Prihvati" onclick = "dodajKnjigu()"/>
-		</p>			
-	</form>
-	
-<div>
-
-<div id="azuriranje_knjige">
-	
-	<form name = "AzurirajKnjigu" class="form" onsubmit= "return ValidirajUnosKnjige()" >			
-		ID knjige:<br> 
-		<input type="text" name="naziv" class="rounded"  id="p_id_knjige"/><br><br>
-		
-		Naziv:<br> 
-		<input type="text" name="naziv" class="rounded"  id="p_naziv_knjige"/><br><br>
-
-		Opis:<br>
-		<input type="text" name="opis" class="rounded" id="p_opis_knjige"/><br><br>
-
-		Kolicina:<br> 
-		<input type="text" name="kolicina" class="rounded" id="p_kolicina_knjiga"/><br><br>
-
-		Link slike:<br>
-		<input type="text" name="link" class="rounded" id="p_link_slike"/><br><br>
-
-		<p class = "prihvati">
-			<input type="submit" value="Prihvati" onclick = "azurirajKnjigu()"/>
-		</p>			
-	</form>
+<div id="opcije_za_knjige">
 	
 <div>
