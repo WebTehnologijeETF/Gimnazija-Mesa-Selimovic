@@ -36,7 +36,7 @@ font-family : Stalemate;
 #lijevo {
 background-color : #267794;
 height : auto;
-width : 200px;
+width : 205px;
 float : left;
 text-align : left;
 }
@@ -55,11 +55,6 @@ background: url("warning.png") 0% no-repeat;
 	background: url("warning.png") 0% no-repeat;
 }
 
-.webcheck.da{
-	color: red;
-}
-
-
 #lijevo  h2{
 text-align : center;
 }
@@ -77,29 +72,37 @@ color: white;
 color: #01A0D7;
 }
 
-
-
 #glavni {
 height : auto;
-width : 484px;
+width : 480px;
 float : left;
 padding-left : 4px;
 }
+
 #desno {
+text-align : left;
 background-color : #267794;
-width : 200px;
+width : 205px;
 float : right;
 padding-left : 4px;
 }
+
+#desno  h2{
+	text-align : center;
+	color: white;
+}
+
 #tablica {
 text-align : center;
 }
+
 article {
 border-style : solid;
 border-width : medium;
 border-color : white;
 padding-left : 2px;
 }
+
 #podnozje {
 background-color : #2B3849;
 color : white;
@@ -107,12 +110,14 @@ width : auto;
 clear : both;
 text-align : left;
 }
+
 a {
 color : white;
 padding-left : 25px;
 text-decoration : none;
 font-weight : bold;
 }
+
 a:visited {
 color : silver;
 text-decoration : none;
@@ -121,58 +126,72 @@ a:hover {
 color : #01A0D7;
 text-decoration : none;
 }
+
 form {
 width : 500px;
 margin : 0 auto;
 }
+
 footer {
 text-align : right;
 }
+
 #lighter {
 width : 300px;
 height : 150px;
 float : right;
 }
+
 .search {
 padding : 6px 15px 6px 30px;
 margin-top : 100px;
 margin-left : 70px;
 background : url('search.png') 8px 6px no-repeat;
 }
+
 .rounded {
 border-radius : 15px;
 }
+
 input[type="text"] {
 color : #bcbcbc;
 }
+
 ul {
 list-style : none;
 }
+
 .lighter input[type="text"] {
 border : #d0d0d0 solid 1px;
 background-color : #fcfcfc;
 }
+
 #tekst {
 width : 800px;
 height : auto;
 margin-left : auto;
 margin-right : auto;
 }
+
 #tekst h1 {
 text-align : center;
 }
+
 #tekst img {
 display : block;
 margin-left : auto;
 margin-right : auto;
 }
+
 #smjerovi_tabela {
 text-align : center;
 }
+
 ul.a {
 list-style-type : circle;
 list-style-position : outside;
 }
+
 input, textarea {
 padding : 10px;
 border : #E5E5E5 solid 1px;
@@ -180,23 +199,51 @@ width : 200px;
 color : #999999;
 box-shadow : 0 0 8px rgba(0, 0, 0, 0.1);
 }
+
 textarea {
 width : 400px;
 height : 150px;
 max-width : 400px;
 line-height : 18px;
 }
+
 input:hover, textarea:hover, input:focus, textarea:focus {
 box-shadow : 0 0 8px rgba(0, 0, 0, 0.2);
 }
+
 .form label {
 margin-left : 10px;
 color : #999999;
 }
+
 .submit input {
 width : 100px;
 height : 40px;
-background-color : #474E69;
+background-color : #2B3849;
 color : #FFF;
 border-radius : 3px;
+}
+
+.prihvati input { 
+width : 200px;
+height : 40px;
+background-color : #2B3849;
+color : #FFF;
+border-radius : 3px;
+}
+
+#greska_skola{
+color : red;
+}
+
+#knjige{
+text-align: center;
+}
+
+#unos_knjige{
+ display: none;
+}
+
+#brisanje_knjige{
+ display: none;
 }

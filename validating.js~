@@ -1,8 +1,0 @@
-function provjeriFormu() {
-    //var x = document.getElementsByClassName("submit");
-    //alert(x.lenght)
-}
-
-    var x = document.getElementsByClassName("submit");
-    alert(x.lenght)
-//document.getElementById("mfid").addEventListener( "submit", provjeriFormu);
