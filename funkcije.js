@@ -66,15 +66,39 @@ function loadPage(path)
 	{
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
 		{
-			document.getElementById("ostatak").innerHTML=xmlhttp.responseText;
+			
+			 document.getElementById("ostatak").innerHTML=xmlhttp.responseText;
+			
 			//Deexpand galerije :)
-			if(path === "Home") firstload();
+			if(path === "Home")  firstload();
 			if(path === "Biblioteka") ucitajKnjige();
 		}	
 	}
-	xmlhttp.open("GET", path + ".html", true);
+	if(path === "Home") xmlhttp.open("GET", path + ".php", true);
+	else xmlhttp.open("GET", path + ".html", true);
 	xmlhttp.send();
 }
+
+function loadNews(paket)
+{
+	
+	var xmlhttp = new XMLHttpRequest();
+	var objekat = JSON.stringify(paket);
+	
+	xmlhttp.onreadystatechange = function()
+	{
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+		{		
+			 document.getElementById("ostatak").innerHTML = xmlhttp.responseText;
+			 firstload();
+		}
+	}
+	
+	xmlhttp.open("POST", "Home.php", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("novost=" + objekat);
+}
+
 
 //Asinhrona provjera postojanja skole u opcini
 function ProvjeriSkolu()
@@ -128,10 +152,10 @@ function ucitajKnjige()
 		
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
-			var studenti = JSON.parse(xmlhttp.responseText);
-			for(var i = 0; i < studenti.length; i++) 
+			var knjige = JSON.parse(xmlhttp.responseText);
+			for(var i = 0; i < knjige.length; i++) 
 			document.getElementById("knjige").innerHTML += 
-			('<tr><td>' + studenti[i].naziv + '</td><td>' + studenti[i].opis + '</td><td>' + studenti[i].kolicina + '</td><td><img src="' + studenti[i].slika + '" alt="nesto" style="width:128px;height:128px" ></td> </tr>');
+			('<tr><td>' + knjige[i].id + '</td><td>' + knjige[i].naziv + '</td><td>' + knjige[i].opis + '</td><td>' + knjige[i].kolicina + '</td><td><img src="' + knjige[i].slika + '" alt="nesto" style="width:128px;height:128px" ></td> </tr>');
 		}
 	}
 	

@@ -1,4 +1,4 @@
-		<div id="lijevo">
+<div id="lijevo">
 			
 		<h2>Galerije</h2>
 		
@@ -51,59 +51,69 @@
 				</ul>
 			</li>
 		</ul>
-		</div>
+</div>
 		
 		<div id="glavni">
-			
-			<article>
-				<header>
-					<h1>Održano takmičenje iz odbojke</h1>
-					<p>Objavljenjo: 24.03.2015</p>
-				</header>
-				<img src=http://gmstz.stud.ba/vijesti/20150324/1m.jpg alt="Mountain View">
-					<p>Dana 24.03.2015. godine u sali Gimnazije "Meša Selimović" održano je takmičenje iz odbojke za srednje škole.</p>
-				<footer>
-					<p><a href="#">Opširnije</a></p>
-				</footer>
-			</article>
-			
-			<article>	
-				<header>
-					<h1>Održano predavanje povodom SVJETSKOG DANA VODA</h1>
-					<p>Objavljenjo: 23.03.2015</p>
-				</header>
-				<img src=http://gmstz.stud.ba/vijesti/20150323/1m.jpg alt="Mountain View">
-					<p>Dana 23.03.2015. godine u Gimnaziji "Meša Selimović" obilježen SVJETSKI DAN VODA.</p>
-				<footer>
-					<p><a href="#">Opširnije</a></p>
-				</footer>
-			</article>
-			
-			<article>	
-				<header>
-					<h1>Učešće na II internacionalnom književnom susretu</h1>
-					<p>Objavljenjo: 20.03.2015</p>
-				</header>
-				<img src=http://gmstz.stud.ba/vijesti/201503200/1m.jpg alt="Mountain View">
-					<p>Dana 20.03.2015. godine učenici Gimnazije "Meša Selimović" Tuzla su učestvovali na 'II internacionalnom književnom susretu.
-					Učestvovali su učenici i profesori iz Crne Gore, Bosne i Hercegovine i Hrvatske.</p>
-				<footer>
-					<p><a href="#">Opširnije</a></p>
-				</footer>
-			</article>
-			
-			<article>	
-				<header>
-					<h1>Održan čas o OCR tehnologiji</h1>
-					<p>Objavljenjo: 20.03.2015</p>
-				</header>
-				<img src=http://gmstz.stud.ba/vijesti/20150320/1m.jpg alt="Mountain View">
-					<p>Dana 20.03.2015. godine učenici 4. razreda matematičko-informatičkog odjeljenja su imali čas na kojem.</p>
-				<footer>
-					<p><a href="#">Opširnije</a></p>
-				</footer>
-			</article>
+		<?php		
+		if($_SERVER['REQUEST_METHOD'] == 'POST')
+		{
+				$paket = json_decode($_POST["novost"], true);
+				echo '<article><header><h1>'.$paket["naslov"].'</h1><p>Objavljenjo:'.$paket["datum"];
+				echo '</p></header><img src='.$paket["link_slike"].' alt="Mountain View"><p>'.$paket["opsirno"].'</p>';				
+				echo '<footer><p>Tekst objavio: '.$paket["autor"].'</p><a  onclick="loadPage('."'Home'".')">Nazad</a></footer>';	
+				echo '</article>';
+		}
+		else
+		{
+			foreach (glob("*.txt") as $file) 
+			{
+				$file_stream = fopen($file, "r"); 
+				if ($file_stream) 
+				{
+					$lines = file($file, FILE_IGNORE_NEW_LINES);
+					fclose($file_stream);
+					
+					$datum = $lines[0];
+					$autor = $lines[1];
+					$naslov = $lines[2][0].mb_strtolower(substr($lines[2],1), 'UTF-8');;
+					$link = $lines[3];
+					$opis_novosti = '';
+					$opsirnije = false;
+					$opsirno_novosti = '';
+					
+					for($i = 4; $i < count($lines); $i++)
+					{
+						if($lines[$i] == '--') 
+						{
+							$opsirnije = true;
+							continue;
+						}	
+						
+						if(!$opsirnije) $opis_novosti = $opis_novosti.' '.$lines[$i];
+						else $opsirno_novosti = $opsirno_novosti.' '.$lines[$i];
+					}
+					
+					echo '<article><header><h1>'.$naslov.'</h1><p>Objavljenjo:'.$datum;
+					echo '</p></header><img src='.$link.' alt="Mountain View"><p>'.$opis_novosti.'</p>';
+					if($opsirnije) 
+					{
+						$paket = json_encode(array("datum"=>$datum, "autor"=>$autor, "naslov"=>$naslov, "link_slike"=>$link, "opsirno"=>$opsirno_novosti));
+						echo "<footer><a  onclick='loadNews(".$paket.")'>Opsirno</a></footer>";
+					}	
+					
+					
+					echo '</article>';
+					
+				} 
+				else 
+				{
+					echo '<script>alert("Fajl nije validan")</script>';
+				}
+			}
+		}			
+		?>	
 		</div>
+		
 		<div id="desno">
 			<h2>Provjera škole</h2>
 				<form name = "ProvjeraSkole" class="form" onsubmit= "return ProvjeriSkoluAkcija()">			
@@ -121,3 +131,4 @@
 						<div id="greska_skola"></div>
 				</form>
 		</div>
+		

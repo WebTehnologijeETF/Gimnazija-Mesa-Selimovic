@@ -7,9 +7,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
 <SCRIPT src = "funkcije.js"></SCRIPT>
 </HEAD>
-<BODY onload="loadPage('Home')">
-
-		
+<BODY onload = "loadPage('Home')">	
 	<div id="okvir">
 		<div id="meni">
 			<ul>
@@ -33,6 +31,7 @@
 		</div>
 		
 		<div id = "ostatak">
+			
 		
 		</div>
 	
