@@ -7,4 +7,5 @@ Dana 20.03.2015. godine učenici Gimnazije "Meša Selimović" Tuzla su učestvov
 Učestvovali su učenici i profesori iz Crne Gore, Bosne i Hercegovine i Hrvatske.
 --
 Ovo je primjer nekog opširnog teksta
-i treba da se ispiše u novom prozoru.			
+i treba da se ispiše u novom prozoru
+i to bi bilo to.			
