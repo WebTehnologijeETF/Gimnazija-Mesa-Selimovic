@@ -74,8 +74,7 @@ function loadPage(path)
 			if(path === "Biblioteka") ucitajKnjige();
 		}	
 	}
-	if(path === "Home") xmlhttp.open("GET", path + ".php", true);
-	else xmlhttp.open("GET", path + ".html", true);
+	xmlhttp.open("GET", path + ".php", true);
 	xmlhttp.send();
 }
 
@@ -100,6 +99,7 @@ function loadNews(paket)
 }
 
 
+
 //Asinhrona provjera postojanja skole u opcini
 function ProvjeriSkolu()
 {
@@ -112,7 +112,6 @@ function ProvjeriSkolu()
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
 		{
 			var objekat = JSON.parse(xmlhttp.responseText);
-
 			document.getElementById("greska_skola").innerHTML = "";
 			if(typeof objekat.ok === "undefined" && typeof objekat.greska !== "undefined") document.getElementById("greska_skola").innerHTML = objekat.greska;
 		}
@@ -274,6 +273,6 @@ function prikaziFormu(path)
 			document.getElementById("opcije_za_knjige").innerHTML = xmlhttp.responseText;
 		}	
 	}
-	xmlhttp.open("GET", path + ".html", true);
+	xmlhttp.open("GET", path + ".php", true);
 	xmlhttp.send();
 }

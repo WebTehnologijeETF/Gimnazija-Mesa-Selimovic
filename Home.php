@@ -65,13 +65,47 @@
 		}
 		else
 		{
-			foreach (glob("*.txt") as $file) 
+	
+		function Uporedi($file1, $file2)
+		{
+				$str1 = $str2 = "0000-00-00 00:00:00";
+				
+				$file_stream = fopen($file1, "r");
+				
+				if ($file_stream) 
+				{
+					$str1 = implode(file($file1, FILE_IGNORE_NEW_LINES));
+					$str1 = substr($str1,9,4).'-'.substr($str1,6,2).'-'.substr($str1,3,2).' '.substr($str1,14,8);
+					fclose($file_stream);
+				}
+				
+				$file_stream = fopen($file2, "r"); 
+				if ($file_stream) 
+				{
+					$str2 = implode(file($file2, FILE_IGNORE_NEW_LINES));
+					$str2 = substr($str2,9,4).'-'.substr($str2,6,2).'-'.substr($str2,3,2).' '.substr($str2,14,8);
+					fclose($file_stream);
+				}
+				
+				return strtotime($str2) - strtotime($str1);
+			}
+			
+			$all_news = array();
+			
+			foreach (glob("*.txt") as $file)
+			{
+				array_push($all_news, $file);
+			}
+			
+			usort($all_news, "Uporedi");
+	
+			foreach ($all_news as $file) 
 			{
 				$file_stream = fopen($file, "r"); 
 				if ($file_stream) 
 				{
 					$lines = file($file, FILE_IGNORE_NEW_LINES);
-					fclose($file_stream);
+					fclose($file_stream);				
 					
 					$datum = $lines[0];
 					$autor = $lines[1];
