@@ -1,9 +1,9 @@
 		
 		<div id = "tekst">
-			<h1>Meša Selimović</h1>
+			<h1>Selimović</h1>
 		
 		<p>
-		   Meša Selimović je rodjen 26. aprila 1910. godine u Tuzli. U rodnom gradu završio je osnovnu školu i gimnaziju. 1930. upisao se na studijsku grupu 
+		   PMeša Selimović je rodjen 26. aprila 1910. godine u Tuzli. U rodnom gradu završio je osnovnu školu i gimnaziju. 1930. upisao se na studijsku grupu 
 		   srpskohrvatski jezik i jugoslovenska književnost Filozofskog fakulteta u Beogradu. Nakon završenih studija na Filozofskom fakultetu u Beogradu, 
 		   do početka Drugog svjetskog rata, radio je kao profesor gimnazije u rodnom gradu. Zatvoren 1942., a 1943. našao se na slobodnoj teritoriji. 
 		   Učestvovao je do kraja rata u borbi protiv okupatora.
