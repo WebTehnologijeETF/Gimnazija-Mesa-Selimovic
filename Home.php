@@ -97,7 +97,7 @@
 			
 			if($komentar != "" && $autor != "")
 			{
-				echo "Bio ".$komentar."-".$autor;
+
 				$rezultat2 = $veza->query("INSERT INTO komentar SET vijest=".$id.", tekst='".$komentar."', autor='".$autor."', email='".$email."'");
 				
 				if (!$rezultat2) 

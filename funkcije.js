@@ -106,7 +106,7 @@ function loadComment(paket)
 
 	var xmlhttp = new XMLHttpRequest();
 	var objekat = JSON.stringify(paket);
-	alert(objekat);
+	
 	xmlhttp.onreadystatechange = function()
 	{
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
