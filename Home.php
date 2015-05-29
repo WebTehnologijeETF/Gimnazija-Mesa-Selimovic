@@ -55,7 +55,7 @@
 		
 		<div id="glavni">
 		<?php		
-		$veza = new PDO("mysql:dbname=gms;host=localhost;charset=utf8", "gmstz", "gmstz");
+/*		$veza = new PDO("mysql:dbname=gms;host=localhost;charset=utf8", "gmstz", "gmstz");
 		$veza->exec("set names utf8");
 		$sve_vijesti = true;
 		
@@ -180,7 +180,8 @@
 					$paket = json_encode(array("id"=>$id, "autor"=>"", "komentar"=>"", "email"=>""));
 					echo "<footer><a  onclick='loadNews(".$paket.")'>Opsirno</a></footer></article>";	
 			}	
-		}	 
+		}*/
+			echo "Php test";
 		?>	
 		</div>
 		
