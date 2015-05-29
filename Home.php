@@ -58,12 +58,8 @@
 		$veza = new PDO("mysql:dbname=gmstz;host=127.5.86.130;charset=utf8", "admintQTwqSu", "4jc2v8FRfAVI");
 		$veza->exec("set names utf8");
 		$sve_vijesti = true;
-		$id = 1;
-		$rezultat3 = $veza->query("select COUNT(*) broj_komentara from komentar where vijest = ".$id);
-		$rezultat3 = $rezultat3->fetchColumn(0);
-		print "<h3>Komentari(".$rezultat3."):</h3>";  
-		
-/*		if($_SERVER['REQUEST_METHOD'] == 'POST')
+	
+		if($_SERVER['REQUEST_METHOD'] == 'POST')
 		{
 			$sve_vijesti = false;
 			$paket = json_decode($_POST["novost"], true);
@@ -184,8 +180,7 @@
 					$paket = json_encode(array("id"=>$id, "autor"=>"", "komentar"=>"", "email"=>""));
 					echo "<footer><a  onclick='loadNews(".$paket.")'>Opsirno</a></footer></article>";	
 			}	
-		}*/
-			echo "Php test";
+		}
 		?>	
 		</div>
 		
