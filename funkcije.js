@@ -83,7 +83,7 @@ function loadNews(paket)
 	
 	var xmlhttp = new XMLHttpRequest();
 	var objekat = JSON.stringify(paket);
-	
+		
 	xmlhttp.onreadystatechange = function()
 	{
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
@@ -98,7 +98,28 @@ function loadNews(paket)
 	xmlhttp.send("novost=" + objekat);
 }
 
+function loadComment(paket)
+{
+	paket["autor"] = document.getElementById("autor").value;
+	paket["komentar"] = document.getElementById("koment").value;
+	paket["email"] = document.getElementById("email").value;
 
+	var xmlhttp = new XMLHttpRequest();
+	var objekat = JSON.stringify(paket);
+
+	xmlhttp.onreadystatechange = function()
+	{
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+		{		
+			 document.getElementById("ostatak").innerHTML = xmlhttp.responseText;
+			 firstload();
+		}
+	}
+	
+	xmlhttp.open("POST", "Home.php", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("novost=" + objekat);
+}
 
 //Asinhrona provjera postojanja skole u opcini
 function ProvjeriSkolu()

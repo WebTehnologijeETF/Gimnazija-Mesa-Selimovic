@@ -55,96 +55,132 @@
 		
 		<div id="glavni">
 		<?php		
+		$veza = new PDO("mysql:dbname=gms;host=localhost;charset=utf8", "gmstz", "gmstz");
+		$veza->exec("set names utf8");
+		$sve_vijesti = true;
+		
 		if($_SERVER['REQUEST_METHOD'] == 'POST')
 		{
-				$paket = json_decode($_POST["novost"], true);
-				echo '<article><header><h1>'.$paket["naslov"].'</h1><p>Objavljenjo:'.$paket["datum"];
-				echo '</p></header><img src='.$paket["link_slike"].' alt="Mountain View"><p>'.$paket["opsirno"].'</p>';				
-				echo '<footer><p>Tekst objavio: '.$paket["autor"].'</p><a  onclick="loadPage('."'Home'".')">Nazad</a></footer>';	
-				echo '</article>';
+			$sve_vijesti = false;
+			$paket = json_decode($_POST["novost"], true);
+			$id = $paket["id"];
+			$autor = $paket["autor"];
+			$komentar = $paket["komentar"];
+			$email = $paket["email"];
+			if($id == "X" && $komentar == "X" && $autor == "X" && $email = "X") $sve_vijesti = true;
+		}
+		
+		if(!$sve_vijesti)
+		{
+			$paket = json_decode($_POST["novost"], true);
+			$id = $paket["id"];
+			$autor = $paket["autor"];
+			$komentar = $paket["komentar"];
+			$email = $paket["email"];
+		
+
+			$jedna_vijest = $veza->query("select id, naslov, opsirno, link, UNIX_TIMESTAMP(vrijeme) vrijeme2, autor from vijest where id = ".$id);
+			
+			foreach ($jedna_vijest as $vijest) 
+			{
+		  			$naslov = $vijest['naslov'];
+					$link = $vijest['link'];
+					$autor1 = $vijest['autor'];
+					$opsirno_novosti = $vijest['opsirno'];
+					$datum = date("d.m.Y. (h:i)", $vijest['vrijeme2']);
+					$paket_return = json_encode(array("id"=>"X", "autor"=>"X", "komentar"=>"X", "email"=>"X"));
+					
+					echo '<article><header><h1>'.htmlspecialchars($naslov, ENT_QUOTES, 'UTF-8').'</h1><p>Objavljenjo: '.htmlspecialchars($datum, ENT_QUOTES, 'UTF-8');
+					echo '</p></header><img src='.htmlspecialchars($link, ENT_QUOTES, 'UTF-8').' alt="Mountain View"><p>'.htmlspecialchars($opsirno_novosti, ENT_QUOTES, 'UTF-8').'</p>';
+					echo "<footer><a  onclick='loadNews(".$paket_return.")'>Nazad</a></footer></article>";	
+			}
+			
+			if($komentar != "" && $autor != "")
+			{
+				$rezultat2 = $veza->query("INSERT INTO komentar SET vijest=".$id.", tekst='".$komentar."', autor='".$autor."', email='".$email."'");
+				
+				if (!$rezultat2) 
+				{
+					$greska = $veza->errorInfo();
+					print "SQL greška: " . $greska[2];
+					exit();
+				}
+			}
+	
+			print "<h3>Dodaj komentar: </h3>";
+			print "<br/>Autor(*):<br/> <input type='text' name='autor' id='autor'/><br/>";
+			print "<br/>Email:<br/> <input type='text' name='email' id='email'/><br/>";
+			print "<br/>Komentar(*):<br/> <textarea name='koment' id='koment'></textarea><br/><br/>";
+			$komentarPaket = json_encode(array("id"=>$id, "autor"=>"a", "komentar"=>"a", "email"=>""));
+			print "<input type='button' value='Pošalji' onclick = 'loadComment(".$komentarPaket.")'/>";
+			  
+			$rezultat1 = $veza->query("select tekst, autor, email, UNIX_TIMESTAMP(vrijeme) vrijeme2 from komentar where vijest = ".$id." order by vrijeme desc");
+
+			  if (!$rezultat1) 
+			  {
+				$greska = $veza->errorInfo();
+				print "SQL greška: " . $greska[2];
+				exit();
+			  }
+			  else
+			  {
+				   $rezultat3 = $veza->query("select COUNT(*) broj_komentara from komentar where vijest = ".$id);
+          
+					  if (!$rezultat3)
+					  {
+						$greska = $veza->errorInfo();
+						print "SQL greška: " . $greska[2];
+						exit();
+					  }
+					  else
+					  {
+						  $rezultat3 = $rezultat3->fetchColumn(0);
+						  if($rezultat3 == 0) print "<h3>Nema komentara<h3>";
+						  else print "<h3>Komentari(".$rezultat3."):</h3>";  
+					  }
+					  
+				  
+				foreach ($rezultat1 as $komentar)
+				{
+					if($komentar["email"] != "")
+					{
+						 print "<div id = 'komentar'><h5><a href='mailto:".htmlspecialchars($komentar['email'], ENT_QUOTES, 'UTF-8')."'>";
+						 print htmlspecialchars($komentar['autor'], ENT_QUOTES, 'UTF-8')."</a></h5><small>".date("d.m.Y. (h:i)", htmlspecialchars($komentar['vrijeme2'], ENT_QUOTES, 'UTF-8'))."</small><p>".htmlspecialchars($komentar['tekst'], ENT_QUOTES, 'UTF-8')."</p></div>";						
+					}
+					else print "<div id = 'komentar'><h5>".htmlspecialchars($komentar['autor'], ENT_QUOTES, 'UTF-8')."</h5><small>".date("d.m.Y. (h:i)", $komentar['vrijeme2'])."</small><p>".htmlspecialchars($komentar['tekst'], ENT_QUOTES, 'UTF-8')."</p></div>";
+				}				
+			  }
+	
 		}
 		else
 		{
-	
-		function Uporedi($file1, $file2)
-		{
-				$str1 = $str2 = "0000-00-00 00:00:00";
-				
-				$file_stream = fopen($file1, "r");
-				
-				if ($file_stream) 
-				{
-					$str1 = implode(file($file1, FILE_IGNORE_NEW_LINES));
-					$str1 = substr($str1,9,4).'-'.substr($str1,6,2).'-'.substr($str1,3,2).' '.substr($str1,14,8);
-					fclose($file_stream);
-				}
-				
-				$file_stream = fopen($file2, "r"); 
-				if ($file_stream) 
-				{
-					$str2 = implode(file($file2, FILE_IGNORE_NEW_LINES));
-					$str2 = substr($str2,9,4).'-'.substr($str2,6,2).'-'.substr($str2,3,2).' '.substr($str2,14,8);
-					fclose($file_stream);
-				}
-				
-				return strtotime($str2) - strtotime($str1);
-			}
-			
-			$all_news = array();
-			
-			foreach (glob("*.txt") as $file)
+			$rezultat = $veza->query("select id, naslov, opis, link, UNIX_TIMESTAMP(vrijeme) vrijeme2, autor from vijest order by vrijeme desc");
+		 
+			 if (!$rezultat) 
+			 {
+				  $greska = $veza->errorInfo();
+				  print "SQL greška: " . $greska[2];
+				  exit();
+			 }
+
+
+			foreach ($rezultat as $vijest) 
 			{
-				array_push($all_news, $file);
-			}
-			
-			usort($all_news, "Uporedi");
-	
-			foreach ($all_news as $file) 
-			{
-				$file_stream = fopen($file, "r"); 
-				if ($file_stream) 
-				{
-					$lines = file($file, FILE_IGNORE_NEW_LINES);
-					fclose($file_stream);				
+		 
+					$id = $vijest['id'];
+		  			$naslov = $vijest['naslov'];
+					$link = $vijest['link'];
+					$autor = $vijest['autor'];
+					$opis_novosti = $vijest['opis'];
+					//$opsirno_novosti = $vijest['opsirno'];
+					$datum = date("d.m.Y. (h:i)", $vijest['vrijeme2']);
 					
-					$datum = $lines[0];
-					$autor = $lines[1];
-					$naslov = $lines[2][0].mb_strtolower(substr($lines[2],1), 'UTF-8');;
-					$link = $lines[3];
-					$opis_novosti = '';
-					$opsirnije = false;
-					$opsirno_novosti = '';
-					
-					for($i = 4; $i < count($lines); $i++)
-					{
-						if($lines[$i] == '--') 
-						{
-							$opsirnije = true;
-							continue;
-						}	
-						
-						if(!$opsirnije) $opis_novosti = $opis_novosti.' '.$lines[$i];
-						else $opsirno_novosti = $opsirno_novosti.' '.$lines[$i];
-					}
-					
-					echo '<article><header><h1>'.$naslov.'</h1><p>Objavljenjo:'.$datum;
-					echo '</p></header><img src='.$link.' alt="Mountain View"><p>'.$opis_novosti.'</p>';
-					if($opsirnije) 
-					{
-						$paket = json_encode(array("datum"=>$datum, "autor"=>$autor, "naslov"=>$naslov, "link_slike"=>$link, "opsirno"=>$opsirno_novosti));
-						echo "<footer><a  onclick='loadNews(".$paket.")'>Opsirno</a></footer>";
-					}	
-					
-					
-					echo '</article>';
-					
-				} 
-				else 
-				{
-					echo '<script>alert("Fajl nije validan")</script>';
-				}
-			}
-		}			
+					echo '<article><header><h1>'.htmlspecialchars($naslov, ENT_QUOTES, 'UTF-8').'</h1><p>Objavljenjo:'.$datum;
+					echo '</p></header><img src='.htmlspecialchars($link, ENT_QUOTES, 'UTF-8').' alt="Mountain View"><p>'.$opis_novosti.'</p>';
+					$paket = json_encode(array("id"=>$id, "autor"=>"", "komentar"=>"", "email"=>""));
+					echo "<footer><a  onclick='loadNews(".$paket.")'>Opsirno</a></footer></article>";	
+			}	
+		}	 
 		?>	
 		</div>
 		

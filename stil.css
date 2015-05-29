@@ -247,3 +247,19 @@ text-align: center;
 #brisanje_knjige{
  display: none;
 }
+
+/*Komentari*/
+#komentar
+{
+	border-style : solid;
+	border-width : medium;
+	border-color : white;
+	padding-left : 1px;
+}
+
+komentar.a {
+color : black;
+padding-left : 25px;
+text-decoration : none;
+font-weight : bold;
+}

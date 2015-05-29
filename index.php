@@ -31,9 +31,7 @@
 		</div>
 		
 		<div id = "ostatak">
-			
-		
-		</div>
+				</div>
 	
 		<div id="podnozje"><p>Copyright &copy; Elmir Hodžić 2014/2015.</p></div>
 	</div>
