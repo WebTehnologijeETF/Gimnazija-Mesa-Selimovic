@@ -133,7 +133,7 @@ function ProvjeriSkolu()
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
 		{
 			var objekat = JSON.parse(xmlhttp.responseText);
-			document.getElementById("greska_skola").innerHTML = "";
+			document.getElementById("greska_skola").innerHTML = " ";
 			if(typeof objekat.ok === "undefined" && typeof objekat.greska !== "undefined") document.getElementById("greska_skola").innerHTML = objekat.greska;
 		}
 		
@@ -149,7 +149,7 @@ function ProvjeriSkoluAkcija()
 	var opcina = document.getElementById("NazivOpcine").value;
 	var skola = document.getElementById("NazivSkole").value;
 	var greska = document.getElementById("greska_skola").innerHTML;
-	if(opcina != "" && skola != "" && greska === "") return true;
+	if(opcina != "" && skola != "" && greska === " ") return true;
 	return false;
 }
 
