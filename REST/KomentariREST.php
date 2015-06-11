@@ -8,7 +8,7 @@
 	
 	function rest_get($request, $data) 
 	{
-		$veza = new PDO("mysql:dbname=gms;host=localhost;charset=utf8", "wt8usr", "wt8pass");
+		$veza = new PDO("mysql:dbname=gmstz;host=127.5.86.130;charset=utf8", "admintQTwqSu", "4jc2v8FRfAVI");
 		$veza->exec("set names utf8");
 		
 		
@@ -35,7 +35,7 @@
 	}
 	function rest_post($request, $data)
 	{ 
-		$veza = new PDO("mysql:dbname=gms;host=localhost;charset=utf8", "wt8usr", "wt8pass");
+		$veza = new PDO("mysql:dbname=gmstz;host=127.5.86.130;charset=utf8", "admintQTwqSu", "4jc2v8FRfAVI");
 		$veza->exec("set names utf8");
 		$email = $data["email"];
 		$tekst = $data["tekst"];
@@ -61,7 +61,7 @@
 	
 	function rest_delete($request) 
 	{ 
-		$veza = new PDO("mysql:dbname=gms;host=localhost;charset=utf8", "wt8usr", "wt8pass");
+		$veza = new PDO("mysql:dbname=gmstz;host=127.5.86.130;charset=utf8", "admintQTwqSu", "4jc2v8FRfAVI");
 		$veza->exec("set names utf8");
 		$id = $_GET["id"];
 		$rezultat = $veza->prepare("DELETE FROM vijest WHERE id = :id");
@@ -72,7 +72,7 @@
 	
 	function rest_put($request, $data)
 	{
-		$veza = new PDO("mysql:dbname=gms;host=localhost;charset=utf8", "wt8usr", "wt8pass");
+		$veza = new PDO("mysql:dbname=gmstz;host=127.5.86.130;charset=utf8", "admintQTwqSu", "4jc2v8FRfAVI");
 		$veza->exec("set names utf8");
 		
 		$vijest = json_decode($_GET["vijest"], true);
