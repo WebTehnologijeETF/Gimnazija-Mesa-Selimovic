@@ -37,9 +37,9 @@
 	{ 
 		$veza = new PDO("mysql:dbname=gmstz;host=127.5.86.130;charset=utf8", "admintQTwqSu", "4jc2v8FRfAVI");
 		$veza->exec("set names utf8");
-		$email = $data["email"];
-		$tekst = $data["tekst"];
-		$vijest = $data["vijest"];
+		$email = htmlentities($data["email"]);
+		$tekst = htmlentities($data["tekst"]);
+		$vijest = htmlentities($data["vijest"]);
 		$autor = "anonimaus";//CE BITI $_SESSION["username"];
 
 		$rezultat = $veza->prepare("INSERT INTO komentar SET email = :email, tekst = :tekst, autor= :autor, vijest = :vijest");
