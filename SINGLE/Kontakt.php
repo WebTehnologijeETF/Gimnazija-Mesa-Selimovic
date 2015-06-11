@@ -1,16 +1,15 @@
-<?php include('ValidacijaForme.php'); ?>
 
-	<form method="post"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" name = "InputForm" class="form">
+	<form method="post" >
 		
 		<p class="name">
-			<input type="text" name="name" id="name" placeholder="Ime prezime" value="<?php echo $name; ?>"/>
+			<input type="text" name="name" id="name" placeholder="Ime prezime"/>
 			<label for="name">Ime i prezime</label>
 			<p id = "name_error"><p>
 		</p>
 		
 
 		<p class="email">
-			<input type="text" name="email" id="email" placeholder="mail@example.com" value="<?php echo $email; ?>"/>
+			<input type="text" name="email" id="email" placeholder="mail@example.com"/>
 			<label for="email">Email</label>
 			<p id = "email_error"><p>
 		</p>
@@ -22,11 +21,11 @@
 		</p>
 
 		<p class="web">
-			<input type="text" name="web" id="web" placeholder="www.example.com" value="<?php echo $web; ?>" disabled/>
+			<input type="text" name="web" id="web" placeholder="www.example.com"  disabled/>
 		</p>		
 	
 		<p class="text">
-			<textarea id="input" name="text" placeholder="Napiši nešto" value="<?php echo $text; ?>"></textarea>
+			<textarea id="input" name="text" placeholder="Napiši nešto" ></textarea>
 			<p id = "text_error"><p>
 		</p>
 		

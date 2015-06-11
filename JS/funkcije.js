@@ -1,3 +1,6 @@
+var periodic;
+var coments_open = false;
+
 //Validacija kontakt forme
 function myFunction(){
     var regImePrezime = /\w\w\w+\s\w\w\w+/;
@@ -25,9 +28,22 @@ function myFunction(){
     }
     else document.getElementById("text_error").innerHTML = '';
 
-
     return testAll;
 };
+function dajDatum(timestamp)
+{
+	var pubDate = new Date(timestamp * 1000);
+	var weekday=new Array("Nedjelja","Ponedjeljak","Utorak","Srijeda","Četvrtak","Petak","Subota");
+	var monthname=new Array("Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec");
+	var formattedDate = weekday[pubDate.getDay()] + ' ' 
+		+ monthname[pubDate.getMonth()] + ' ' 
+		+ pubDate.getDate() + ', ' + pubDate.getFullYear()
+		+ " u " + pubDate.getHours() + " : " +
+		pubDate.getMinutes();
+
+	return formattedDate;
+}
+			
 
 //Omogućavanje unosa web stranice u zavisnosti od kliknutog radio buttona
 function Enable() {
@@ -55,7 +71,9 @@ function firstload()
 	for(var i = 0; i < parents.length; i++)
 	{
 		if(parents[i].id === '') parents[i].style.display = "none";
-	}
+	}	
+	fcn();
+
 }
 
 //Funkcija za singlepage
@@ -71,10 +89,11 @@ function loadPage(path)
 			
 			//Deexpand galerije :)
 			if(path === "Home")  firstload();
+			else clearTimeout(periodic);
 			if(path === "Biblioteka") ucitajKnjige();
 		}	
 	}
-	xmlhttp.open("GET", path + ".php", true);
+	xmlhttp.open("GET", "SINGLE/" + path + ".php", true);
 	xmlhttp.send();
 }
 
@@ -106,7 +125,7 @@ function loadComment(paket)
 
 	var xmlhttp = new XMLHttpRequest();
 	var objekat = JSON.stringify(paket);
-	
+
 	xmlhttp.onreadystatechange = function()
 	{
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
@@ -133,7 +152,7 @@ function ProvjeriSkolu()
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
 		{
 			var objekat = JSON.parse(xmlhttp.responseText);
-			document.getElementById("greska_skola").innerHTML = "  ";
+			document.getElementById("greska_skola").innerHTML = " ";
 			if(typeof objekat.ok === "undefined" && typeof objekat.greska !== "undefined") document.getElementById("greska_skola").innerHTML = objekat.greska;
 		}
 		
@@ -149,7 +168,7 @@ function ProvjeriSkoluAkcija()
 	var opcina = document.getElementById("NazivOpcine").value;
 	var skola = document.getElementById("NazivSkole").value;
 	var greska = document.getElementById("greska_skola").innerHTML;
-	if(opcina != "" && skola != "" && greska === "  ") return true;
+	if(opcina != "" && skola != "" && greska === " ") return true;
 	return false;
 }
 
@@ -183,6 +202,261 @@ function ucitajKnjige()
 	document.getElementById("knjige").innerHTML = "";
 	xmlhttp.send();
 }
+
+
+function ucitajNovosti()
+{
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			var vijesti = JSON.parse(xmlhttp.responseText);
+			for(var i = 0; i < vijesti.length; i++)
+			{
+
+			document.getElementById("glavni").innerHTML += 
+			('<article><header><h1>' + vijesti[i].naslov + '</h1><p>Objavljenjo: ' + dajDatum(vijesti[i].vrijeme2) +
+			'</p></header><img src= ' + vijesti[i].link + ' alt="Mountain View"><p>' + vijesti[i].opis + '</p>'
+			+ '<footer><a href = "#" onclick = "dajNovost('+ vijesti[i].id+')">Opširno</a></footer></article>');
+
+			}				
+		}
+	}
+	
+	xmlhttp.open("GET","REST/NovostiREST.php",true);
+	document.getElementById("glavni").innerHTML = "";
+	xmlhttp.send();
+}
+
+function dajNovost(id)
+{
+	clearTimeout(periodic);
+	
+	var getstring = "REST/NovostiREST.php?id=" + id;
+	
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			
+			var vijesti = JSON.parse(xmlhttp.responseText);
+			for(var i = 0; i < vijesti.length; i++) 
+			{
+			document.getElementById("glavni").innerHTML += 
+			('<article><header><h1>' + vijesti[i].naslov + '</h1><p>Objavljenjo: ' + dajDatum(vijesti[i].vrijeme2) +
+			'</p></header><img src = ' + vijesti[i].link + ' alt="Mountain View"><p>' + vijesti[i].opsirno + '</p>'
+			+ '<a href = "#" id = "komentari_broj" onclick = "ucitajKomentare('+ vijesti[i].id+')"> Komentara</a>' +
+			 '<footer><a href = "#" onclick = "fcn()">Nazad</a></footer></article>');
+			 dajBrojKomentara(vijesti[i].id);
+			 }
+		}
+	}
+	
+	xmlhttp.open("GET", getstring,true);
+	document.getElementById("glavni").innerHTML = "";
+	xmlhttp.send();
+}
+
+function dajBrojKomentara(id)
+{
+	
+	var getstring = 'REST/KomentariREST.php?vijest=' + id;
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			var komentari = JSON.parse(xmlhttp.responseText);
+			var broj = 0;
+			if(typeof komentari.error === 'undefined')
+			broj = komentari.length;
+			document.getElementById("komentari_broj").innerHTML = "Komentara (" + broj + ")";
+		}
+	}
+	
+	xmlhttp.open("GET", getstring,true);
+	xmlhttp.send();
+}
+
+function ucitajKomentare(id)
+{
+	if(coments_open) 
+	{
+		dajNovost(id);
+		coments_open = false;
+		return;
+	}
+	
+	
+	formaZaKomentar(id);
+	var getstring = 'REST/KomentariREST.php?vijest=' + id;
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			var komentari = JSON.parse(xmlhttp.responseText);
+			
+			for(var i = 0; i < komentari.length; i++) 
+			if(komentari[i].email != "")
+			{
+				 document.getElementById("glavni").innerHTML += 
+				 ("<div id = 'komentar'><h5><a href= 'mailto:" + komentari[i].email + "'>"
+				 + komentari[i].autor + "</a></h5><small>" + dajDatum(komentari[i].vrijeme2) + "</small><p>" + komentari[i].tekst + "</p></div>");						
+			}
+			else
+			document.getElementById("glavni").innerHTML += ("<div id = 'komentar'><h5>" + komentari[i].autor + "</h5><small>" + dajDatum(komentari[i].vrijeme2) + "</small><p>"
+		    + komentari[i].tekst + "</p></div>");
+			
+			coments_open = true;
+		}
+	}
+	
+	xmlhttp.open("GET", getstring,true);
+	xmlhttp.send();
+}
+
+function formaZaKomentar(id)
+{
+	document.getElementById("glavni").innerHTML += ("<h3>Dodaj komentar: </h3>" + 
+	 "<form><br/>Email:<br/> <input type='text' name='email' id='email'/><br/>" +
+	 "<br/>Komentar(*):<br/> <textarea name='koment' id='koment'></textarea><br/><br/>"+
+	 "<input type='button' value='Posalji' onclick = 'posaljiKomentar(" + id + ")' ></form>");
+}
+
+function posaljiKomentar(id)
+{
+	coments_open = false;
+    var email = document.getElementById("email").value;
+    var koment = document.getElementById("koment").value;
+	
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(event) {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+		{
+			var us = JSON.parse(xmlhttp.responseText);
+			if(us.izvjestaj === "Uspijeh!") 
+			{
+				document.getElementById("glavni").innerHTML = "";
+				dajNovost(id);
+			}	
+				
+
+		}
+
+    }
+	
+    xmlhttp.open("POST", "REST/KomentariREST.php", true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send("&email=" + email + "&tekst=" + koment + "&vijest=" + id)
+}
+
+function fcn()
+{
+	ucitajNovosti();
+	periodic = setInterval(periodicCheckNUpdate, 2000);
+}
+
+function periodicCheckNUpdate()
+{
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			var n = JSON.parse(xmlhttp.responseText);
+			var list = document.getElementsByTagName("article");
+			if(list.length != n.broj) ucitajNovosti();
+		}
+	}
+	
+	xmlhttp.open("GET","REST/NovostiREST.php?br=1",true);
+	xmlhttp.send();
+}
+
+function periodicCheckNUpdate()
+{
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			var n = JSON.parse(xmlhttp.responseText);
+			var list = document.getElementsByTagName("article");
+			if(list.length != n.broj) ucitajNovosti();
+		}
+	}
+	
+	xmlhttp.open("GET","REST/NovostiREST.php?br=1",true);
+	xmlhttp.send();
+}
+
 
 function dodajKnjigu(){
 	
@@ -294,6 +568,7 @@ function prikaziFormu(path)
 			document.getElementById("opcije_za_knjige").innerHTML = xmlhttp.responseText;
 		}	
 	}
-	xmlhttp.open("GET", path + ".php", true);
+	xmlhttp.open("GET", "SINGLE/" + path + ".php", true);
 	xmlhttp.send();
 }
+

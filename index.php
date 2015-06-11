@@ -2,10 +2,10 @@
 <HTML>
 <HEAD>
 <TITLE>Gimnazija Meša Selimović</TITLE>
-<link rel="stylesheet" type="text/css" href="stil.css">
+<link rel="stylesheet" type="text/css" href="CSS/stil.css">
 <link rel="shortcut icon" href="http://gmstz.stud.ba/slike/favicon.png">
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
-<SCRIPT src = "funkcije.js"></SCRIPT>
+<SCRIPT src = "JS/funkcije.js"></SCRIPT>
 </HEAD>
 <BODY onload = "loadPage('Home')">	
 	<div id="okvir">
